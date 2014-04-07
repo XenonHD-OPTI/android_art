@@ -161,17 +161,13 @@ else
 endif
 
 # Enable thread-safety for GCC 4.6 on the target but not for GCC 4.7 where this feature was removed.
-ifneq ($(filter 4.6 4.6.%, $(TARGET_GCC_VERSION)),)
+ifneq ($(filter 4.6 4.6.%, $(shell $(TARGET_CC) --version)),)
   ART_TARGET_CFLAGS += -Wthread-safety
-else
-  # Warn if not using GCC 4.6 for target builds when not doing a top-level or 'mma' build.
-  ifneq ($(ONE_SHOT_MAKEFILE),)
-    # Enable target GCC 4.6 with: export TARGET_GCC_VERSION_EXP=4.6
-    $(info Using target GCC $(TARGET_GCC_VERSION) disables thread-safety checks.)
-  endif
 endif
-# We build with GCC 4.6 on the host.
-ART_HOST_CFLAGS += -Wthread-safety
+ifneq ($(filter 4.6 4.6.%, $(shell $(TARGET_CC) --version)),)
+# Enable thread-safety for GCC 4.6 on the target but not for GCC 4.7 where this feature was removed.
+  ART_HOST_CFLAGS += -Wthread-safety
+endif
 
 # Make host builds easier to debug and profile by not omitting the frame pointer.
 ART_HOST_CFLAGS += -fno-omit-frame-pointer
