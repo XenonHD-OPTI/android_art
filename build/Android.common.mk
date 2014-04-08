@@ -164,7 +164,7 @@ endif
 ifneq ($(filter 4.6 4.6.%, $(shell $(TARGET_CC) --version)),)
   ART_TARGET_CFLAGS += -Wthread-safety
 endif
-ifneq ($(filter 4.6 4.6.%, $(shell $(TARGET_CC) --version)),)
+ifneq ($(filter 4.6 4.6.%, $(shell $(HOST_CC) --version)),)
 # Enable thread-safety for GCC 4.6 on the target but not for GCC 4.7 where this feature was removed.
   ART_HOST_CFLAGS += -Wthread-safety
 endif
