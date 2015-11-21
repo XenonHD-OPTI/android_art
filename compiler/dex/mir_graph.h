@@ -380,7 +380,7 @@ struct MIR {
   } meta;
 
   explicit MIR():offset(0), optimization_flags(0), m_unit_index(0), bb(NullBasicBlockId),
-                 next(nullptr), ssa_rep(nullptr) , extraData(nullptr){
+                 next(nullptr), ssa_rep(nullptr) , extraData(nullptr) {
     memset(&meta, 0, sizeof(meta));
   }
 
@@ -397,7 +397,6 @@ struct MIR {
   static void operator delete(void* p) {}  // Nop.
 
     ExtendedMIR* extraData;
-
 };
 
 struct SuccessorBlockInfo;
@@ -1101,6 +1100,8 @@ class MIRGraph {
    */
   bool HasSuspendTestBetween(BasicBlock* source, BasicBlockId target_id);
 
+  void CleanupGraphData() QC_WEAK;
+
  protected:
   int FindCommonParent(int block1, int block2);
   void ComputeSuccLineIn(ArenaBitVector* dest, const ArenaBitVector* src1,
@@ -1234,7 +1235,6 @@ class MIRGraph {
 
   public:
   QCMIRGraph* qcm;
-
 };
 
 }  // namespace art
